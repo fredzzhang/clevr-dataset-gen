@@ -1,1 +1,1 @@
-[["cube", ["blue"]], ["sphere", ["red", "blue"]]]
+{"cube": ["blue"], "sphere": ["red", "blue"]}
