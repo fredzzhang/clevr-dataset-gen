@@ -342,10 +342,19 @@ def add_random_objects(scene_struct, num_objects, args, camera):
     object_mapping = [(v, k) for k, v in properties['shapes'].items()]
     size_mapping = list(properties['sizes'].items())
 
-  shape_color_combos = None
-  if args.shape_color_combos_json is not None:
-    with open(args.shape_color_combos_json, 'r') as f:
+  # shape_color_combos = None
+  # if args.shape_color_combos_json is not None:
+  #   with open(args.shape_color_combos_json, 'r') as f:
+  #     shape_color_combos = list(json.load(f).items())
+
+  # Load shape and colour combinations from a pre-determined configuration and
+  # force all objects in a scene to have the same shape and colour
+  with open(args.shape_color_combos_json, 'r') as f:
       shape_color_combos = list(json.load(f).items())
+  obj_name_out, color_choices = random.choice(shape_color_combos)
+  color_name = random.choice(color_choices)
+  obj_name = [k for k, v in object_mapping if v == obj_name_out][0]
+  rgba = color_name_to_rgba[color_name]
 
   positions = []
   objects = []
@@ -394,14 +403,14 @@ def add_random_objects(scene_struct, num_objects, args, camera):
         break
 
     # Choose random color and shape
-    if shape_color_combos is None:
-      obj_name, obj_name_out = random.choice(object_mapping)
-      color_name, rgba = random.choice(list(color_name_to_rgba.items()))
-    else:
-      obj_name_out, color_choices = random.choice(shape_color_combos)
-      color_name = random.choice(color_choices)
-      obj_name = [k for k, v in object_mapping if v == obj_name_out][0]
-      rgba = color_name_to_rgba[color_name]
+    # if shape_color_combos is None:
+    #   obj_name, obj_name_out = random.choice(object_mapping)
+    #   color_name, rgba = random.choice(list(color_name_to_rgba.items()))
+    # else:
+    #   obj_name_out, color_choices = random.choice(shape_color_combos)
+    #   color_name = random.choice(color_choices)
+    #   obj_name = [k for k, v in object_mapping if v == obj_name_out][0]
+    #   rgba = color_name_to_rgba[color_name]
 
     # For cube, adjust the size a bit
     if obj_name == 'Cube':
