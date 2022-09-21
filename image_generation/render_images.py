@@ -372,6 +372,7 @@ def add_random_objects(scene_struct, num_objects, args, camera):
       # the objects in the scene and start over.
       num_tries += 1
       if num_tries > args.max_retries:
+        print("Resetting the scene.")
         for obj in blender_objects:
           utils.delete_object(obj)
         return add_random_objects(scene_struct, num_objects, args, camera)
